@@ -33,21 +33,40 @@
         Berlin</label
       >
     </div>
+
+    <VacancyPreview
+      class="vacancy-card"
+      v-for="vacancy in vacancies"
+      :key="vacancy.id"
+      :company="vacancy.company"
+      :company_logo="
+        vacancy.company_logo ||
+          'https://via.placeholder.com/250x250?text=Image+not+found'
+      "
+      :created_at="getFormattedDate(vacancy.created_at)"
+      :location="vacancy.location"
+      :title="vacancy.title"
+      :id="vacancy.id"
+      @onClick="onCardClick"
+    />
   </div>
 </template>
 
 <script>
 import SearchBar from '@/components/SearchBar.vue';
+import VacancyPreview from '@/components/VacancyPreview.vue';
 
 export default {
   name: 'Home',
 
   components: {
     SearchBar,
+    VacancyPreview,
   },
 
   data() {
     return {
+      vacancies: [],
       location: '',
       fullTime: false,
       cities: {
@@ -62,20 +81,28 @@ export default {
   methods: {
     async search(query) {
       let { location } = this;
-      Object.entries(this.cities).forEach((element) => {
-        if (element.value) {
-          location += `+${element.key}`;
+      Object.entries(this.cities).forEach(([key, value]) => {
+        if (value) {
+          location += `+${key}`;
         }
       });
-
       try {
         const url = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?search=${query}&location=${location}&full_time=${this.fullTime}`;
         const response = await fetch(url);
-        const json = await response.json();
-        console.log(json);
+        this.vacancies = await response.json();
       } catch (error) {
-        console.log(error);
+        console.log('Something went wrong 😔 ', error);
       }
+    },
+
+    onCardClick(id) {
+      console.log(id);
+    },
+
+    getFormattedDate(dateString) {
+      const date = new Date(dateString);
+      const days = Math.trunc((Date.now() - date) / 86400000);
+      return `${days} days ago`;
     },
   },
 };
@@ -123,5 +150,9 @@ export default {
   font-size: 0.75rem;
   box-shadow: 1px 1px 3px #dcdfec;
   margin: 0.5rem 0;
+}
+
+.vacancy-card {
+  margin-bottom: 1.25rem;
 }
 </style>
