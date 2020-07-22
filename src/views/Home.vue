@@ -1,54 +1,58 @@
 <template>
-  <div>
+  <div class="container">
     <h1 class="app-title">
       Github <span class="app-title_regular">Jobs</span>
     </h1>
     <SearchBar @search="search" />
-    <div class="controls">
-      <label for="full-time" class="controls__label">
-        <input type="checkbox" id="full-time" v-model="fullTime" />
-        Full time</label
-      >
-      <span class="controls__header">Location</span>
-      <input
-        type="text"
-        class="controls__input"
-        placeholder="City, state, zip code or country"
-        v-model="location"
-      />
-      <label for="london" class="controls__label">
-        <input type="checkbox" id="london" v-model="cities.london" />
-        London</label
-      >
-      <label for="amsterdam" class="controls__label">
-        <input type="checkbox" id="amsterdam" v-model="cities.amsterdam" />
-        Amsterdam</label
-      >
-      <label for="new-york" class="controls__label">
-        <input type="checkbox" id="new-york" v-model="cities.newYork" /> New
-        York</label
-      >
-      <label for="berlin" class="controls__label">
-        <input type="checkbox" id="berlin" v-model="cities.berlin" />
-        Berlin</label
-      >
-    </div>
+    <main class="main-section">
+      <div class="controls">
+        <label for="full-time" class="controls__label">
+          <input type="checkbox" id="full-time" v-model="fullTime" />
+          Full time</label
+        >
+        <span class="controls__header">Location</span>
+        <input
+          type="text"
+          class="controls__input"
+          placeholder="City, state, zip code or country"
+          v-model="location"
+        />
+        <label for="london" class="controls__label">
+          <input type="checkbox" id="london" v-model="cities.london" />
+          London</label
+        >
+        <label for="amsterdam" class="controls__label">
+          <input type="checkbox" id="amsterdam" v-model="cities.amsterdam" />
+          Amsterdam</label
+        >
+        <label for="new-york" class="controls__label">
+          <input type="checkbox" id="new-york" v-model="cities.newYork" /> New
+          York</label
+        >
+        <label for="berlin" class="controls__label">
+          <input type="checkbox" id="berlin" v-model="cities.berlin" />
+          Berlin</label
+        >
+      </div>
 
-    <VacancyPreview
-      class="vacancy-card"
-      v-for="vacancy in vacancies"
-      :key="vacancy.id"
-      :company="vacancy.company"
-      :company_logo="
-        vacancy.company_logo ||
-          'https://via.placeholder.com/250x250?text=Image+not+found'
-      "
-      :created_at="getFormattedDate(vacancy.created_at)"
-      :location="vacancy.location"
-      :title="vacancy.title"
-      :id="vacancy.id"
-      @onClick="onCardClick"
-    />
+      <div class="vacancies">
+        <VacancyPreview
+          class="vacancy-card"
+          v-for="vacancy in vacancies"
+          :key="vacancy.id"
+          :company="vacancy.company"
+          :company_logo="
+            vacancy.company_logo ||
+              'https://via.placeholder.com/250x250?text=Image+not+found'
+          "
+          :created_at="getFormattedDate(vacancy.created_at)"
+          :location="vacancy.location"
+          :title="vacancy.title"
+          :id="vacancy.id"
+          @onClick="onCardClick"
+        />
+      </div>
+    </main>
   </div>
 </template>
 
@@ -117,6 +121,11 @@ export default {
   font-weight: 400;
 }
 
+.main-section {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 .controls {
   display: flex;
   flex-flow: column nowrap;
@@ -152,7 +161,36 @@ export default {
   margin: 0.5rem 0;
 }
 
+.vacancies {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
 .vacancy-card {
   margin-bottom: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 2vh 10vw;
+  }
+
+  .app-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .main-section {
+    flex-flow: row nowrap;
+  }
+
+  .controls {
+    width: 30%;
+  }
+
+  .vacancies {
+    width: 70%;
+    padding: 1rem 0 2rem 2rem;
+  }
 }
 </style>

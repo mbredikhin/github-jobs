@@ -6,15 +6,17 @@
     <div class="content">
       <span class="card__company">{{ company }}</span>
       <span class="card__title">{{ title }}</span>
-      <span v-if="isFullTime" class="card__badge">Full time</span>
       <div class="footer">
-        <div class="card__extra card__extra--location">
-          <img class="card__icon" :src="require('@/assets/clock.svg')" />
-          <span class="card__extra-text">{{ location }}</span>
-        </div>
-        <div class="card__extra card__extra--created">
-          <img class="card__icon" :src="require('@/assets/world.svg')" />
-          <span class="card__extra-text">{{ created_at }}</span>
+        <span v-if="isFullTime" class="card__badge">Full time</span>
+        <div class="extras">
+          <div class="card__extra card__extra--location">
+            <img class="card__icon" :src="require('@/assets/clock.svg')" />
+            <span class="card__extra-text">{{ location }}</span>
+          </div>
+          <div class="card__extra card__extra--created">
+            <img class="card__icon" :src="require('@/assets/world.svg')" />
+            <span class="card__extra-text">{{ created_at }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -71,7 +73,6 @@ export default {
 <style scoped>
 .card {
   display: flex;
-  min-height: 8rem;
   padding: 0.5rem;
   background: white;
   border-radius: 4px;
@@ -79,7 +80,7 @@ export default {
 }
 
 .image {
-  width: 25%;
+  width: 85px;
   padding: 0.25rem;
 }
 
@@ -89,12 +90,12 @@ export default {
 }
 
 .content {
-  padding-left: 0.5rem;
+  padding: 0.25rem 0 0 0.5rem;
   width: 75%;
   display: flex;
   flex-flow: column nowrap;
-  font-family: 'Roboto', sans-serif;
   justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
 }
 
 .card__company {
@@ -102,21 +103,20 @@ export default {
   font-size: 12px;
   line-height: 14px;
   color: #334680;
-  padding: 0.25rem 0;
 }
 
 .card__title {
   font-size: 16px;
   line-height: 19px;
   color: #334680;
-  padding: 0.25rem 0;
+  padding: 0.2rem 0;
 }
 
 .card__badge {
   display: inline-block;
   text-align: center;
   max-width: 4rem;
-  padding: 0.2rem;
+  padding: 0.25rem;
   font-size: 12px;
   color: #334680;
   font-weight: 500;
@@ -129,15 +129,19 @@ export default {
   font-size: 12px;
   color: #b9bdcf;
   border-radius: 4px;
-  padding: 0.25rem 0;
+}
+
+.footer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
 }
 
 .card__extra {
   display: inline-flex;
-  margin-right: 0.75rem;
+  margin-right: 0.5rem;
   font-size: 12px;
   color: #b7bcce;
-  padding: 0.25rem 0;
 }
 
 .card__extra-text {
@@ -147,5 +151,19 @@ export default {
 .card__icon {
   width: 18px;
   margin-right: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .card__extra {
+    float: right;
+  }
+
+  .footer {
+    flex-flow: row nowrap;
+  }
+
+  .extras {
+    padding: 0.5rem 0 0;
+  }
 }
 </style>
