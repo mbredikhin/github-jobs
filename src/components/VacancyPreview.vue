@@ -10,11 +10,11 @@
         <span v-if="isFullTime" class="card__badge">Full time</span>
         <div class="extras">
           <div class="card__extra card__extra--location">
-            <img class="card__icon" :src="require('@/assets/clock.svg')" />
+            <img class="card__icon" :src="require('@/assets/world.svg')" />
             <span class="card__extra-text">{{ location }}</span>
           </div>
           <div class="card__extra card__extra--created">
-            <img class="card__icon" :src="require('@/assets/world.svg')" />
+            <img class="card__icon" :src="require('@/assets/clock.svg')" />
             <span class="card__extra-text">{{ created_at }}</span>
           </div>
         </div>
