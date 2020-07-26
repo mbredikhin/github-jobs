@@ -79,6 +79,10 @@ export default {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .image {
   width: 85px;
   padding: 0.25rem;
