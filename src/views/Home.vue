@@ -10,7 +10,7 @@
           <input type="checkbox" id="full-time" v-model="fullTime" />
           Full time</label
         >
-        <span class="controls__header">Location</span>
+        <span class="header">Location</span>
         <input
           type="text"
           class="controls__input"
@@ -49,7 +49,7 @@
           :location="vacancy.location"
           :title="vacancy.title"
           :id="vacancy.id"
-          @onClick="onCardClick"
+          @onClick="() => onCardClick(vacancy)"
         />
       </div>
     </main>
@@ -99,14 +99,31 @@ export default {
       }
     },
 
-    onCardClick(id) {
-      console.log(id);
+    onCardClick(vacancy) {
+      this.$router.push(`/vacancy/${vacancy.id}`);
     },
 
     getFormattedDate(dateString) {
       const date = new Date(dateString);
-      const days = Math.trunc((Date.now() - date) / 86400000);
-      return `${days} days ago`;
+      const now = new Date();
+      let range = now - date;
+      let years = 0;
+      let months = 0;
+      let days = 0;
+      const yearInMs = 31556952000;
+      const monthInMs = 2592000000;
+      const dayInMs = 86400000;
+
+      years = range > yearInMs ? Math.trunc(range / yearInMs) : 0;
+      range -= Math.round(years * yearInMs);
+      months = range > monthInMs ? Math.trunc(range / monthInMs) : 0;
+      range -= Math.round(months * monthInMs);
+      days = range > dayInMs ? Math.trunc(range / dayInMs) : 1;
+
+      let result = `${days} days ago`;
+      result = months ? `${months} months, ${result}` : result;
+      result = years ? `${years} years, ${result}` : result;
+      return result;
     },
   },
 };
@@ -132,7 +149,7 @@ export default {
   padding: 1rem 0;
 }
 
-.controls__header {
+.header {
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
   font-weight: 600;
